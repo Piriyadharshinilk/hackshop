@@ -1,0 +1,75 @@
+import streamlit as st
+import random
+st.title("Welcome to my Streamlit application!!!")
+st.subheader("from the creator<3")
+port=st.button("PORTFOLIO")
+if port:
+    st.html("<h3 >PORTFOLIO FOR PIRIYADHARSHINI L.K</h3>")
+    st.html("<p ><b>About us</b><br>I am a passionate and eager learner with a strong foundation in programming and web development. I am currently honing my skills in C, C++, Python, HTML, and CSS. Although I have not yet undertaken projects, I am enthusiastic about exploring opportunities to apply my knowledge in real-world scenarios and collaborating with others to create impactful solutions.</p>")
+    st.html("<h3>TECHNICAL SKILLS</h3>")
+    st.html("<p ><b>Programming Languages:</b> C, C++, HTML, CSS<br><b>Cybersecurity Concepts:</b> Networking</p>")
+    st.html("<h3>CAREER OBJECTIVE</h3>")
+    st.html("<p >I aim to contribute to innovative projects that allow me to leverage my programming and web development skills. I am particularly interested in gaining hands-on experience by </p>")
+    st.html("<h3>What I'am looking for:</h3>")
+    st.html("<p>I am actively looking for opportunities to:<br>1.Work on projects to solidify my skills.<br>2.Learn new technologies and tools.<br>3.Collaborate with mentors and peers to grow as a developer.</p>")
+    st.html("<h3>Contact Information:<br></h3>")
+    st.html("<p>E-mail:piriyakannan29@gamil.com<br>Git hub:https://github.com/Piriyadharshinilk/</p>")
+st.title("Welcome to Guessing game!!!")
+if 'number_guess' not in st.session_state:
+    st.session_state.number_guess = random.randint(1, 100)
+if 'attempts' not in st.session_state:
+    st.session_state.attempts = 0
+st.subheader("------------------------User Guessing Game-------------------------")
+st.write("Guess a number between 1 and 100")
+guess = st.number_input("Enter your guess:", min_value=1, max_value=100, step=1)
+if st.button("Submit Guess"):
+    st.session_state.attempts += 1
+    if guess == st.session_state.number_guess:
+        st.success(f"Congratulations! You guessed the number in {st.session_state.attempts} attempts.")
+        if st.button("Play Again"):
+            st.session_state.number_guess = random.randint(1, 100)
+            st.session_state.attempts = 0
+    elif guess < st.session_state.number_guess:
+        st.write("Try a higher number!")
+    else:
+        st.write("Try a lower number!")
+st.subheader("------------------------------------------------------------------------------")
+st.subheader("----------------------Machaine Guessing Game----------------------")
+st.title("Machine Guesses Your Number (1 to 100)")
+
+# Session State Initialization
+if "low" not in st.session_state:
+    st.session_state.low = 1
+if "high" not in st.session_state:
+    st.session_state.high = 100
+if "guess" not in st.session_state:
+    st.session_state.guess = (st.session_state.low + st.session_state.high) // 2
+
+# Display the machine's guess
+st.subheader(f"My guess is: {st.session_state.guess}")
+
+# Get user feedback
+feedback = st.radio(
+    "Is my guess too high, too low, or correct?",
+    ("Too high", "Too low", "Correct"),
+    key="feedback",
+)
+
+# Update the range and guess based on feedback
+if st.button("Submit Feedback"):
+    if feedback == "Too high":
+        st.session_state.high = st.session_state.guess - 1
+    elif feedback == "Too low":
+        st.session_state.low = st.session_state.guess + 1
+    elif feedback == "Correct":
+        st.success(f"Yay! I guessed your number: {st.session_state.guess}")
+        st.balloons()
+
+    # Recalculate the next guess
+    if feedback != "Correct":
+        if st.session_state.low <= st.session_state.high:
+            st.session_state.guess = (st.session_state.low + st.session_state.high) // 2
+        else:
+            st.error("Something went wrong. Please restart the game.")
+
+st.subheader("------------------------------------------------------------------------------")
